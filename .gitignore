@@ -1,0 +1,24 @@
+# Artefactos de compilación C++
+/build/
+*.exe
+*.o
+*.obj
+*.dll
+*.pdb
+
+# Dependencias y salida del frontend
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.vite/
+
+# Registros y temporales
+*.log
+*.tmp
+*.swp
+*~
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

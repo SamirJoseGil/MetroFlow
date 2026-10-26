@@ -1,0 +1,1047 @@
+{
+  "meta": {
+    "time_model": "Supuesto del modelo: tiempo_min = distancia_haversine / velocidad_comercial, redondeado a 0.5 min. NO es un dato de operacion en vivo.",
+    "commercial_speed_kmh": {
+      "A": 38.0,
+      "B": 21.5,
+      "T": 30.0,
+      "K": 18.0,
+      "J": 18.0,
+      "H": 18.0,
+      "M": 18.0,
+      "O": 16.0
+    },
+    "transfer_penalty_min": 3.0,
+    "graph": "Digrafo ponderado; cada tramo fisico genera dos aristas (ida y vuelta) con igual peso.",
+    "transfer_note": "El transbordo no es una arista: se modela como penalizacion al cambiar de linea en el estado (estacion, linea)."
+  },
+  "transfer_penalty_min": 3.0,
+  "connections": [
+    {
+      "from": 0,
+      "to": 1,
+      "line": "A",
+      "time_min": 2.0,
+      "distance_km": 1.312,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 1,
+      "to": 0,
+      "line": "A",
+      "time_min": 2.0,
+      "distance_km": 1.312,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 1,
+      "to": 2,
+      "line": "A",
+      "time_min": 2.5,
+      "distance_km": 1.617,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 2,
+      "to": 1,
+      "line": "A",
+      "time_min": 2.5,
+      "distance_km": 1.617,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 2,
+      "to": 3,
+      "line": "A",
+      "time_min": 3.0,
+      "distance_km": 1.762,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 3,
+      "to": 2,
+      "line": "A",
+      "time_min": 3.0,
+      "distance_km": 1.762,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 3,
+      "to": 4,
+      "line": "A",
+      "time_min": 2.0,
+      "distance_km": 1.317,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 4,
+      "to": 3,
+      "line": "A",
+      "time_min": 2.0,
+      "distance_km": 1.317,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 4,
+      "to": 5,
+      "line": "A",
+      "time_min": 2.5,
+      "distance_km": 1.428,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 5,
+      "to": 4,
+      "line": "A",
+      "time_min": 2.5,
+      "distance_km": 1.428,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 5,
+      "to": 6,
+      "line": "A",
+      "time_min": 1.5,
+      "distance_km": 1.066,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 6,
+      "to": 5,
+      "line": "A",
+      "time_min": 1.5,
+      "distance_km": 1.066,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 6,
+      "to": 7,
+      "line": "A",
+      "time_min": 1.0,
+      "distance_km": 0.676,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 7,
+      "to": 6,
+      "line": "A",
+      "time_min": 1.0,
+      "distance_km": 0.676,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 7,
+      "to": 8,
+      "line": "A",
+      "time_min": 1.5,
+      "distance_km": 0.832,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 8,
+      "to": 7,
+      "line": "A",
+      "time_min": 1.5,
+      "distance_km": 0.832,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 8,
+      "to": 9,
+      "line": "A",
+      "time_min": 1.0,
+      "distance_km": 0.78,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 9,
+      "to": 8,
+      "line": "A",
+      "time_min": 1.0,
+      "distance_km": 0.78,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 9,
+      "to": 10,
+      "line": "A",
+      "time_min": 1.0,
+      "distance_km": 0.373,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 10,
+      "to": 9,
+      "line": "A",
+      "time_min": 1.0,
+      "distance_km": 0.373,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 10,
+      "to": 11,
+      "line": "A",
+      "time_min": 1.0,
+      "distance_km": 0.498,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 11,
+      "to": 10,
+      "line": "A",
+      "time_min": 1.0,
+      "distance_km": 0.498,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 11,
+      "to": 12,
+      "line": "A",
+      "time_min": 1.0,
+      "distance_km": 0.528,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 12,
+      "to": 11,
+      "line": "A",
+      "time_min": 1.0,
+      "distance_km": 0.528,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 12,
+      "to": 13,
+      "line": "A",
+      "time_min": 1.5,
+      "distance_km": 0.996,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 13,
+      "to": 12,
+      "line": "A",
+      "time_min": 1.5,
+      "distance_km": 0.996,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 13,
+      "to": 14,
+      "line": "A",
+      "time_min": 3.0,
+      "distance_km": 1.996,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 14,
+      "to": 13,
+      "line": "A",
+      "time_min": 3.0,
+      "distance_km": 1.996,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 14,
+      "to": 15,
+      "line": "A",
+      "time_min": 3.0,
+      "distance_km": 2.046,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 15,
+      "to": 14,
+      "line": "A",
+      "time_min": 3.0,
+      "distance_km": 2.046,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 15,
+      "to": 16,
+      "line": "A",
+      "time_min": 1.5,
+      "distance_km": 1.022,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 16,
+      "to": 15,
+      "line": "A",
+      "time_min": 1.5,
+      "distance_km": 1.022,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 16,
+      "to": 17,
+      "line": "A",
+      "time_min": 3.0,
+      "distance_km": 1.743,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 17,
+      "to": 16,
+      "line": "A",
+      "time_min": 3.0,
+      "distance_km": 1.743,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 17,
+      "to": 18,
+      "line": "A",
+      "time_min": 2.5,
+      "distance_km": 1.685,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 18,
+      "to": 17,
+      "line": "A",
+      "time_min": 2.5,
+      "distance_km": 1.685,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 18,
+      "to": 19,
+      "line": "A",
+      "time_min": 2.0,
+      "distance_km": 1.197,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 19,
+      "to": 18,
+      "line": "A",
+      "time_min": 2.0,
+      "distance_km": 1.197,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 19,
+      "to": 20,
+      "line": "A",
+      "time_min": 2.0,
+      "distance_km": 1.293,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 20,
+      "to": 19,
+      "line": "A",
+      "time_min": 2.0,
+      "distance_km": 1.293,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 10,
+      "to": 21,
+      "line": "B",
+      "time_min": 2.0,
+      "distance_km": 0.652,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 21,
+      "to": 10,
+      "line": "B",
+      "time_min": 2.0,
+      "distance_km": 0.652,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 21,
+      "to": 22,
+      "line": "B",
+      "time_min": 2.5,
+      "distance_km": 0.963,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 22,
+      "to": 21,
+      "line": "B",
+      "time_min": 2.5,
+      "distance_km": 0.963,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 22,
+      "to": 23,
+      "line": "B",
+      "time_min": 1.5,
+      "distance_km": 0.583,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 23,
+      "to": 22,
+      "line": "B",
+      "time_min": 1.5,
+      "distance_km": 0.583,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 23,
+      "to": 24,
+      "line": "B",
+      "time_min": 3.5,
+      "distance_km": 1.198,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 24,
+      "to": 23,
+      "line": "B",
+      "time_min": 3.5,
+      "distance_km": 1.198,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 24,
+      "to": 25,
+      "line": "B",
+      "time_min": 2.0,
+      "distance_km": 0.678,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 25,
+      "to": 24,
+      "line": "B",
+      "time_min": 2.0,
+      "distance_km": 0.678,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 25,
+      "to": 26,
+      "line": "B",
+      "time_min": 3.0,
+      "distance_km": 1.112,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 26,
+      "to": 25,
+      "line": "B",
+      "time_min": 3.0,
+      "distance_km": 1.112,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 10,
+      "to": 27,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.479,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 27,
+      "to": 10,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.479,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 27,
+      "to": 28,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.423,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 28,
+      "to": 27,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.423,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 28,
+      "to": 29,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.398,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 29,
+      "to": 28,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.398,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 29,
+      "to": 30,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.608,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 30,
+      "to": 29,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.608,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 30,
+      "to": 31,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.555,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 31,
+      "to": 30,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.555,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 31,
+      "to": 32,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.487,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 32,
+      "to": 31,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.487,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 32,
+      "to": 33,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.547,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 33,
+      "to": 32,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.547,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 33,
+      "to": 34,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.308,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 34,
+      "to": 33,
+      "line": "T",
+      "time_min": 1.0,
+      "distance_km": 0.308,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 3,
+      "to": 35,
+      "line": "K",
+      "time_min": 3.0,
+      "distance_km": 0.843,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 35,
+      "to": 3,
+      "line": "K",
+      "time_min": 3.0,
+      "distance_km": 0.843,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 35,
+      "to": 36,
+      "line": "K",
+      "time_min": 1.5,
+      "distance_km": 0.432,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 36,
+      "to": 35,
+      "line": "K",
+      "time_min": 1.5,
+      "distance_km": 0.432,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 36,
+      "to": 37,
+      "line": "K",
+      "time_min": 2.5,
+      "distance_km": 0.736,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 37,
+      "to": 36,
+      "line": "K",
+      "time_min": 2.5,
+      "distance_km": 0.736,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 26,
+      "to": 38,
+      "line": "J",
+      "time_min": 3.0,
+      "distance_km": 0.973,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 38,
+      "to": 26,
+      "line": "J",
+      "time_min": 3.0,
+      "distance_km": 0.973,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 38,
+      "to": 39,
+      "line": "J",
+      "time_min": 3.5,
+      "distance_km": 1.076,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 39,
+      "to": 38,
+      "line": "J",
+      "time_min": 3.5,
+      "distance_km": 1.076,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 39,
+      "to": 40,
+      "line": "J",
+      "time_min": 2.0,
+      "distance_km": 0.64,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 40,
+      "to": 39,
+      "line": "J",
+      "time_min": 2.0,
+      "distance_km": 0.64,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 34,
+      "to": 41,
+      "line": "H",
+      "time_min": 2.0,
+      "distance_km": 0.569,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 41,
+      "to": 34,
+      "line": "H",
+      "time_min": 2.0,
+      "distance_km": 0.569,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 41,
+      "to": 42,
+      "line": "H",
+      "time_min": 3.0,
+      "distance_km": 0.858,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 42,
+      "to": 41,
+      "line": "H",
+      "time_min": 3.0,
+      "distance_km": 0.858,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 31,
+      "to": 43,
+      "line": "M",
+      "time_min": 2.0,
+      "distance_km": 0.661,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 43,
+      "to": 31,
+      "line": "M",
+      "time_min": 2.0,
+      "distance_km": 0.661,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 43,
+      "to": 44,
+      "line": "M",
+      "time_min": 1.5,
+      "distance_km": 0.437,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 44,
+      "to": 43,
+      "line": "M",
+      "time_min": 1.5,
+      "distance_km": 0.437,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 5,
+      "to": 45,
+      "line": "O",
+      "time_min": 4.5,
+      "distance_km": 1.225,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 45,
+      "to": 5,
+      "line": "O",
+      "time_min": 4.5,
+      "distance_km": 1.225,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 45,
+      "to": 46,
+      "line": "O",
+      "time_min": 2.5,
+      "distance_km": 0.699,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 46,
+      "to": 45,
+      "line": "O",
+      "time_min": 2.5,
+      "distance_km": 0.699,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 46,
+      "to": 47,
+      "line": "O",
+      "time_min": 3.0,
+      "distance_km": 0.742,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 47,
+      "to": 46,
+      "line": "O",
+      "time_min": 3.0,
+      "distance_km": 0.742,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 47,
+      "to": 48,
+      "line": "O",
+      "time_min": 1.5,
+      "distance_km": 0.351,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 48,
+      "to": 47,
+      "line": "O",
+      "time_min": 1.5,
+      "distance_km": 0.351,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 48,
+      "to": 49,
+      "line": "O",
+      "time_min": 1.0,
+      "distance_km": 0.278,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 49,
+      "to": 48,
+      "line": "O",
+      "time_min": 1.0,
+      "distance_km": 0.278,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 49,
+      "to": 50,
+      "line": "O",
+      "time_min": 1.5,
+      "distance_km": 0.433,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 50,
+      "to": 49,
+      "line": "O",
+      "time_min": 1.5,
+      "distance_km": 0.433,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 50,
+      "to": 51,
+      "line": "O",
+      "time_min": 2.0,
+      "distance_km": 0.476,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 51,
+      "to": 50,
+      "line": "O",
+      "time_min": 2.0,
+      "distance_km": 0.476,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 51,
+      "to": 24,
+      "line": "O",
+      "time_min": 2.0,
+      "distance_km": 0.483,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 24,
+      "to": 51,
+      "line": "O",
+      "time_min": 2.0,
+      "distance_km": 0.483,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 24,
+      "to": 52,
+      "line": "O",
+      "time_min": 3.0,
+      "distance_km": 0.739,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 52,
+      "to": 24,
+      "line": "O",
+      "time_min": 3.0,
+      "distance_km": 0.739,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 52,
+      "to": 53,
+      "line": "O",
+      "time_min": 2.0,
+      "distance_km": 0.559,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 53,
+      "to": 52,
+      "line": "O",
+      "time_min": 2.0,
+      "distance_km": 0.559,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 53,
+      "to": 54,
+      "line": "O",
+      "time_min": 2.0,
+      "distance_km": 0.559,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 54,
+      "to": 53,
+      "line": "O",
+      "time_min": 2.0,
+      "distance_km": 0.559,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 54,
+      "to": 55,
+      "line": "O",
+      "time_min": 2.5,
+      "distance_km": 0.616,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 55,
+      "to": 54,
+      "line": "O",
+      "time_min": 2.5,
+      "distance_km": 0.616,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 55,
+      "to": 56,
+      "line": "O",
+      "time_min": 2.5,
+      "distance_km": 0.605,
+      "type": "travel",
+      "available": true
+    },
+    {
+      "from": 56,
+      "to": 55,
+      "line": "O",
+      "time_min": 2.5,
+      "distance_km": 0.605,
+      "type": "travel",
+      "available": true
+    }
+  ]
+}

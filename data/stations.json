@@ -1,0 +1,893 @@
+{
+  "meta": {
+    "source": "Wikipedia (anexo de estaciones del SITVA y articulos por linea) y metrodemedellin.gov.co; coordenadas via la API de coordenadas de Wikipedia (WGS84).",
+    "verified": "Orden e integraciones verificadas. Coordenadas de Metro, Tranvia, Metrocables y extremos de la Linea O verificadas; estaciones intermedias de la Linea O aproximadas (approx_coords = true).",
+    "coordinate_system": "WGS84 (lat, lng)."
+  },
+  "lines": [
+    {
+      "id": "A",
+      "name": "Línea A (Metro)",
+      "mode": "metro",
+      "color": "#2F6FED"
+    },
+    {
+      "id": "B",
+      "name": "Línea B (Metro)",
+      "mode": "metro",
+      "color": "#F5A623"
+    },
+    {
+      "id": "T",
+      "name": "Línea T (Tranvía)",
+      "mode": "tranvia",
+      "color": "#16A34A"
+    },
+    {
+      "id": "K",
+      "name": "Línea K (Metrocable)",
+      "mode": "cable",
+      "color": "#EF4444"
+    },
+    {
+      "id": "J",
+      "name": "Línea J (Metrocable)",
+      "mode": "cable",
+      "color": "#8B5CF6"
+    },
+    {
+      "id": "H",
+      "name": "Línea H (Metrocable)",
+      "mode": "cable",
+      "color": "#EC4899"
+    },
+    {
+      "id": "M",
+      "name": "Línea M (Metrocable)",
+      "mode": "cable",
+      "color": "#0EA5E9"
+    },
+    {
+      "id": "O",
+      "name": "Línea O (Metroplús)",
+      "mode": "brt",
+      "color": "#14B8A6"
+    }
+  ],
+  "stations": [
+    {
+      "id": 0,
+      "name": "Niquía",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.33778,
+      "lng": -75.54444,
+      "municipio": "Bello",
+      "position": "elevada",
+      "terminal": true,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 1,
+      "name": "Bello",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.33028,
+      "lng": -75.55361,
+      "municipio": "Bello",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 2,
+      "name": "Madera",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.31583,
+      "lng": -75.55528,
+      "municipio": "Bello",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 3,
+      "name": "Acevedo",
+      "lines": [
+        "A",
+        "K"
+      ],
+      "lat": 6.30028,
+      "lng": -75.55833,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": [
+        "K"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Tricentenario",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.29028,
+      "lng": -75.56472,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 5,
+      "name": "Caribe",
+      "lines": [
+        "A",
+        "O"
+      ],
+      "lat": 6.27833,
+      "lng": -75.56944,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": [
+        "O"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Universidad",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.26944,
+      "lng": -75.56583,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 7,
+      "name": "Hospital",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.26389,
+      "lng": -75.56333,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": [
+        "1 (Metroplús)"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Prado",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.25694,
+      "lng": -75.56611,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 9,
+      "name": "Parque Berrío",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.25028,
+      "lng": -75.56833,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 10,
+      "name": "San Antonio",
+      "lines": [
+        "A",
+        "B",
+        "T"
+      ],
+      "lat": 6.24722,
+      "lng": -75.56972,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": [
+        "A",
+        "B",
+        "T"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Alpujarra",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.24306,
+      "lng": -75.57139,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 12,
+      "name": "Exposiciones",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.23861,
+      "lng": -75.57306,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 13,
+      "name": "Industriales",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.23,
+      "lng": -75.57556,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": [
+        "1 (Metroplús)",
+        "2 (Metroplús)"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Poblado",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.21222,
+      "lng": -75.57806,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 15,
+      "name": "Aguacatala",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.19417,
+      "lng": -75.58167,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 16,
+      "name": "Ayurá",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.18611,
+      "lng": -75.58611,
+      "municipio": "Envigado",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 17,
+      "name": "Envigado",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.17472,
+      "lng": -75.59694,
+      "municipio": "Itagüí",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 18,
+      "name": "Itagüí",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.16306,
+      "lng": -75.60667,
+      "municipio": "Itagüí",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 19,
+      "name": "Sabaneta",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.15778,
+      "lng": -75.61611,
+      "municipio": "Sabaneta",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 20,
+      "name": "La Estrella",
+      "lines": [
+        "A"
+      ],
+      "lat": 6.15278,
+      "lng": -75.62667,
+      "municipio": "Sabaneta",
+      "position": "soterrada",
+      "terminal": true,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 21,
+      "name": "Cisneros",
+      "lines": [
+        "B"
+      ],
+      "lat": 6.24917,
+      "lng": -75.57528,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": [
+        "1 (Metroplús)"
+      ]
+    },
+    {
+      "id": 22,
+      "name": "Suramericana",
+      "lines": [
+        "B"
+      ],
+      "lat": 6.25306,
+      "lng": -75.58306,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 23,
+      "name": "Estadio",
+      "lines": [
+        "B"
+      ],
+      "lat": 6.25333,
+      "lng": -75.58833,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 24,
+      "name": "Floresta",
+      "lines": [
+        "B",
+        "O"
+      ],
+      "lat": 6.25861,
+      "lng": -75.59778,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": [
+        "O"
+      ]
+    },
+    {
+      "id": 25,
+      "name": "Santa Lucía",
+      "lines": [
+        "B"
+      ],
+      "lat": 6.25806,
+      "lng": -75.60389,
+      "municipio": "Medellín",
+      "position": "elevada",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 26,
+      "name": "San Javier",
+      "lines": [
+        "B",
+        "J"
+      ],
+      "lat": 6.25694,
+      "lng": -75.61389,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": true,
+      "approx_coords": false,
+      "interchanges": [
+        "J"
+      ]
+    },
+    {
+      "id": 27,
+      "name": "San José",
+      "lines": [
+        "T"
+      ],
+      "lat": 6.24732,
+      "lng": -75.56539,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": [
+        "2 (Metroplús)"
+      ]
+    },
+    {
+      "id": 28,
+      "name": "Pabellón del Agua EPM",
+      "lines": [
+        "T"
+      ],
+      "lat": 6.24557,
+      "lng": -75.56199,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 29,
+      "name": "Bicentenario",
+      "lines": [
+        "T"
+      ],
+      "lat": 6.24395,
+      "lng": -75.55878,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 30,
+      "name": "Buenos Aires",
+      "lines": [
+        "T"
+      ],
+      "lat": 6.24141,
+      "lng": -75.55391,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 31,
+      "name": "Miraflores",
+      "lines": [
+        "T",
+        "M"
+      ],
+      "lat": 6.24139,
+      "lng": -75.54889,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": [
+        "M"
+      ]
+    },
+    {
+      "id": 32,
+      "name": "Loyola",
+      "lines": [
+        "T"
+      ],
+      "lat": 6.23903,
+      "lng": -75.54518,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 33,
+      "name": "Alejandro Echavarría",
+      "lines": [
+        "T"
+      ],
+      "lat": 6.23549,
+      "lng": -75.54175,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 34,
+      "name": "Oriente",
+      "lines": [
+        "T",
+        "H"
+      ],
+      "lat": 6.23323,
+      "lng": -75.54014,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": true,
+      "approx_coords": false,
+      "interchanges": [
+        "H"
+      ]
+    },
+    {
+      "id": 35,
+      "name": "Andalucía",
+      "lines": [
+        "K"
+      ],
+      "lat": 6.29633,
+      "lng": -75.55182,
+      "municipio": "Medellín",
+      "position": "teleférico",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 36,
+      "name": "Popular",
+      "lines": [
+        "K"
+      ],
+      "lat": 6.29515,
+      "lng": -75.5481,
+      "municipio": "Medellín",
+      "position": "teleférico",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 37,
+      "name": "Santo Domingo",
+      "lines": [
+        "K"
+      ],
+      "lat": 6.29319,
+      "lng": -75.54174,
+      "municipio": "Medellín",
+      "position": "teleférico",
+      "terminal": true,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 38,
+      "name": "Juan XXIII",
+      "lines": [
+        "J"
+      ],
+      "lat": 6.26569,
+      "lng": -75.6137,
+      "municipio": "Medellín",
+      "position": "teleférico",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 39,
+      "name": "Vallejuelos",
+      "lines": [
+        "J"
+      ],
+      "lat": 6.27536,
+      "lng": -75.614,
+      "municipio": "Medellín",
+      "position": "teleférico",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 40,
+      "name": "La Aurora",
+      "lines": [
+        "J"
+      ],
+      "lat": 6.28111,
+      "lng": -75.6142,
+      "municipio": "Medellín",
+      "position": "teleférico",
+      "terminal": true,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 41,
+      "name": "Las Torres",
+      "lines": [
+        "H"
+      ],
+      "lat": 6.23666,
+      "lng": -75.53632,
+      "municipio": "Medellín",
+      "position": "teleférico",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 42,
+      "name": "Villa Sierra",
+      "lines": [
+        "H"
+      ],
+      "lat": 6.2349,
+      "lng": -75.52876,
+      "municipio": "Medellín",
+      "position": "teleférico",
+      "terminal": true,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 43,
+      "name": "El Pinal",
+      "lines": [
+        "M"
+      ],
+      "lat": 6.24532,
+      "lng": -75.5444,
+      "municipio": "Medellín",
+      "position": "teleférico",
+      "terminal": false,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 44,
+      "name": "Trece de Noviembre",
+      "lines": [
+        "M"
+      ],
+      "lat": 6.2475,
+      "lng": -75.54111,
+      "municipio": "Medellín",
+      "position": "teleférico",
+      "terminal": true,
+      "approx_coords": false,
+      "interchanges": []
+    },
+    {
+      "id": 45,
+      "name": "Cementerio Universal",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.275,
+      "lng": -75.58,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 46,
+      "name": "Córdoba",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.273,
+      "lng": -75.586,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 47,
+      "name": "Pilarica",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.27,
+      "lng": -75.592,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 48,
+      "name": "Ciudadela Universitaria",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.267,
+      "lng": -75.593,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 49,
+      "name": "Facultad de Minas",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.2645,
+      "lng": -75.593,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 50,
+      "name": "Los Colores",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.262,
+      "lng": -75.59,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 51,
+      "name": "Calasanz",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.2595,
+      "lng": -75.5935,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 52,
+      "name": "Los Pinos",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.252,
+      "lng": -75.5985,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 53,
+      "name": "Laureles",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.247,
+      "lng": -75.599,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 54,
+      "name": "Santa Gema",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.242,
+      "lng": -75.5995,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 55,
+      "name": "Villa de Aburrá",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.2365,
+      "lng": -75.6002,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": false,
+      "approx_coords": true,
+      "interchanges": []
+    },
+    {
+      "id": 56,
+      "name": "La Palma",
+      "lines": [
+        "O"
+      ],
+      "lat": 6.231125,
+      "lng": -75.601042,
+      "municipio": "Medellín",
+      "position": "a nivel",
+      "terminal": true,
+      "approx_coords": true,
+      "interchanges": [
+        "1 (Metroplús)",
+        "2 (Metroplús)"
+      ]
+    }
+  ]
+}
