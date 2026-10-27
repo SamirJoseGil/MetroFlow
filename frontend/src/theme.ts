@@ -1,6 +1,6 @@
 // Gestión del tema claro/oscuro. La preferencia se guarda en localStorage y,
-// si no existe, se deriva de la preferencia del sistema operativo. El atributo
-// data-theme del elemento <html> es la única fuente de verdad para el CSS.
+// si no existe, comienza en oscuro. El atributo data-theme del elemento <html>
+// es la única fuente de verdad para los tokens visuales.
 
 export type Theme = "light" | "dark";
 
@@ -13,9 +13,7 @@ export function resolveInitialTheme(): Theme {
   } catch {
     /* localStorage puede no estar disponible */
   }
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return "dark";
 }
 
 export function applyTheme(theme: Theme): void {

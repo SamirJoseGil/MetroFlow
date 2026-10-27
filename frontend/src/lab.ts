@@ -1,6 +1,7 @@
 import type { Criterion, Trace, TraceEvent } from "./api";
 import type { ExploredEdge } from "./map";
 import { icon } from "./icons";
+import { setUIHTML } from "./ui";
 
 /**
  * Laboratorio de algoritmos. Todo se deriva de los eventos REALES emitidos por
@@ -366,16 +367,16 @@ export class LabController {
   private syncPlayButton(): void {
     const play = this.panel.querySelector<HTMLButtonElement>("#lab-play");
     if (play) {
-      play.innerHTML = this.playing
+      setUIHTML(play, this.playing
         ? `${icon("pause", 14)} Pausar`
-        : `${icon("play", 14)} Reproducir`;
+        : `${icon("play", 14)} Reproducir`);
     }
   }
 
   private render(): void {
     const pseudo = PSEUDOCODE[this.input.algorithm];
     const total = this.frames.length;
-    this.panel.innerHTML = `
+    setUIHTML(this.panel, `
       <div class="panel-head">
         <p class="eyebrow">Laboratorio · ${esc(this.input.algorithm === "bfs" ? "BFS" : "Dijkstra")}</p>
         <h2 class="lab-title">${esc(pseudo.title)}</h2>
@@ -409,7 +410,7 @@ export class LabController {
       </div>
 
       <div class="lab-body">
-        <section class="lab-view is-active" data-lab-view="ejecucion" aria-labelledby="lab-tab-ejecucion">
+        <section class="lab-view is-active" data-active="true" data-lab-view="ejecucion" aria-labelledby="lab-tab-ejecucion">
           <div class="lab-narration" aria-live="polite">
             <p class="eyebrow">Narración</p>
             <p class="lab-current" id="lab-current" role="status"></p>
@@ -423,7 +424,7 @@ export class LabController {
           </div>
         </section>
 
-        <section class="lab-view" data-lab-view="pseudocodigo" aria-labelledby="lab-tab-pseudocodigo">
+        <section class="lab-view" data-active="false" data-lab-view="pseudocodigo" aria-labelledby="lab-tab-pseudocodigo">
           <div class="pc-panel">
             <p class="eyebrow">Pseudocódigo</p>
             <ol class="pc-lines" id="lab-pc">
@@ -432,19 +433,19 @@ export class LabController {
           </div>
         </section>
 
-        <section class="lab-view" data-lab-view="eventos" aria-labelledby="lab-tab-eventos">
+        <section class="lab-view" data-active="false" data-lab-view="eventos" aria-labelledby="lab-tab-eventos">
           <p class="eyebrow">Lista de eventos (${total})</p>
           <ol id="lab-events" class="events"></ol>
         </section>
 
-        <section class="lab-view" data-lab-view="estadisticas" aria-labelledby="lab-tab-estadisticas">
+        <section class="lab-view" data-active="false" data-lab-view="estadisticas" aria-labelledby="lab-tab-estadisticas">
           <div class="lab-stats-block">
             <p class="eyebrow">Estadísticas acumuladas</p>
             ${labStatsMarkup()}
             <p class="lab-engine-note">Tiempo de ejecución del motor (total): <span class="mono" id="lab-elapsed">${this.input.trace.stats.elapsedMs.toFixed(3)}</span> ms</p>
           </div>
         </section>
-      </div>`;
+      </div>`);
 
     this.wirePlayback();
     this.wireViewTabs();
@@ -466,6 +467,7 @@ export class LabController {
     });
     this.panel.querySelectorAll<HTMLElement>(".lab-view").forEach((panel) => {
       panel.classList.toggle("is-active", panel.dataset.labView === view);
+      panel.dataset.active = String(panel.dataset.labView === view);
     });
     // Al mostrar la lista de eventos, lleva el evento activo a la vista.
     if (view === "eventos") {
@@ -480,14 +482,16 @@ export class LabController {
     this.frames.forEach((frame, i) => {
       const li = document.createElement("li");
       li.className = `ev ${frame.event.type}`;
+      li.dataset.active = "false";
+      li.dataset.past = "false";
       li.dataset.index = String(i);
       li.tabIndex = 0; // salto a un evento concreto también con teclado
       const label = frame.event.nodeName ?? String(frame.event.node);
-      li.innerHTML = `
+      setUIHTML(li, `
         <span class="ev-type">${esc(frame.event.type)}</span>
         <b>${esc(label)}</b>
         <span class="ev-line">${esc(frame.event.line || "")}</span>
-        <span class="ev-dist">d=${fmt(frame.event.dist)}</span>`;
+        <span class="ev-dist">d=${fmt(frame.event.dist)}</span>`);
       li.addEventListener("click", () => this.goto(i));
       li.addEventListener("keydown", (event) => {
         if (event.key === "Enter" || event.key === " ") {
@@ -578,10 +582,18 @@ export class LabController {
       const items = list.children;
       const activeItem = items[this.index];
       for (const li of Array.from(items)) {
-        (li as HTMLElement).classList.remove("active", "past");
+        const event = li as HTMLElement;
+        event.classList.remove("active", "past");
+        event.dataset.active = "false";
+        event.dataset.past = "false";
       }
-      for (let k = 0; k < this.index; k++) items[k]?.classList.add("past");
+      for (let k = 0; k < this.index; k++) {
+        const event = items[k] as HTMLElement | undefined;
+        event?.classList.add("past");
+        if (event) event.dataset.past = "true";
+      }
       activeItem?.classList.add("active");
+      if (activeItem) (activeItem as HTMLElement).dataset.active = "true";
       // Desplazamiento contenido a la lista: no se desplaza la página entera.
       const listRect = list.getBoundingClientRect();
       const itemRect = activeItem?.getBoundingClientRect();
@@ -617,6 +629,7 @@ export class LabController {
     lines.forEach((el) => {
       const id = el.dataset.pc ?? "";
       el.classList.toggle("pc-active", active.includes(id));
+      el.dataset.active = String(active.includes(id));
     });
   }
 
@@ -637,12 +650,7 @@ export class LabController {
       const v = values[key];
       const out = el.querySelector<HTMLElement>(".stat-value");
       if (!out) continue;
-      if (out.textContent !== String(v)) {
-        out.textContent = String(v);
-        el.classList.remove("stat-flash");
-        void el.offsetWidth;
-        el.classList.add("stat-flash");
-      }
+      out.textContent = String(v);
     }
   }
 

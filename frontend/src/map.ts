@@ -196,7 +196,12 @@ export class MapView {
 
     const svg = document.createElementNS(SVG_NS, "svg");
     svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-    svg.setAttribute("class", `metro-map kind-${kind}`);
+    svg.setAttribute(
+      "class",
+      `metro-map kind-${kind} block h-auto w-full ${
+        kind === "schem" ? "max-h-none" : "max-h-[78vh]"
+      }`,
+    );
     // "group" y no "img": los hijos (estaciones) son botoneras enfocables y
     // "img" haría que los lectores de pantalla trataran al mapa como hoja.
     svg.setAttribute("role", "group");
@@ -209,6 +214,8 @@ export class MapView {
     svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
     this.svg = svg;
 
+    const contextLayer = this.group("map-context");
+    if (kind === "schem") this.drawSchematicContext(contextLayer);
     const edgesLayer = this.group("edges");
     this.routeLayer = this.group("route");
     this.exploreLayer = this.group("explore");
@@ -219,6 +226,78 @@ export class MapView {
     this.drawEdges(edgesLayer);
     this.drawStations(nodesLayer);
     this.installInteraction();
+  }
+
+  private drawSchematicContext(layer: SVGGElement): void {
+    const corridor = this.graph.stations
+      .filter((station) => station.lines.includes("A"))
+      .sort((a, b) => b.lat - a.lat)
+      .map((station) => this.coords(station.id));
+    if (corridor.length < 2) return;
+
+    const offsetPath = (offset: number): string =>
+      corridor
+        .map((point, index) => {
+          const command = index === 0 ? "M" : "L";
+          return `${command}${(point.x + offset).toFixed(1)},${point.y.toFixed(1)}`;
+        })
+        .join(" ");
+
+    for (const offset of [-108, -66, 66, 108]) {
+      const contour = document.createElementNS(SVG_NS, "path");
+      contour.setAttribute("d", offsetPath(offset));
+      contour.setAttribute("class", "schematic-contour");
+      layer.appendChild(contour);
+    }
+
+    const river = document.createElementNS(SVG_NS, "path");
+    river.setAttribute("d", offsetPath(-18));
+    river.setAttribute("class", "schematic-river");
+    layer.appendChild(river);
+
+    const riverCenter = document.createElementNS(SVG_NS, "path");
+    riverCenter.setAttribute("d", offsetPath(-18));
+    riverCenter.setAttribute("class", "schematic-river-center");
+    layer.appendChild(riverCenter);
+
+    const riverLabel = document.createElementNS(SVG_NS, "text");
+    riverLabel.setAttribute("x", "400");
+    riverLabel.setAttribute("y", "620");
+    riverLabel.setAttribute("class", "schematic-river-label");
+    riverLabel.textContent = "Río Medellín";
+    layer.appendChild(riverLabel);
+
+    const municipalities = new Map<string, number[]>();
+    for (const station of this.graph.stations) {
+      const ys = municipalities.get(station.municipio) ?? [];
+      ys.push(this.coords(station.id).y);
+      municipalities.set(station.municipio, ys);
+    }
+    const places = [...municipalities]
+      .map(([name, ys]) => ({
+        name,
+        y: ys.reduce((sum, value) => sum + value, 0) / ys.length,
+      }))
+      .sort((a, b) => a.y - b.y);
+    let lastY = -Infinity;
+    for (const place of places) {
+      const label = document.createElementNS(SVG_NS, "text");
+      const y = Math.max(place.y, lastY + 34);
+      label.setAttribute("x", String(this.baseW - 112));
+      label.setAttribute("y", y.toFixed(1));
+      label.setAttribute("class", "schematic-place");
+      label.textContent = place.name;
+      layer.appendChild(label);
+      lastY = y;
+    }
+
+    const note = document.createElementNS(SVG_NS, "text");
+    note.setAttribute("x", String(this.baseW - 18));
+    note.setAttribute("y", String(this.baseH - 18));
+    note.setAttribute("text-anchor", "end");
+    note.setAttribute("class", "schematic-scale-note");
+    note.textContent = "Esquema · no a escala";
+    layer.appendChild(note);
   }
 
   private group(cls: string): SVGGElement {

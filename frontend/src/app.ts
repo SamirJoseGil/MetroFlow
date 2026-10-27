@@ -1,4 +1,5 @@
 import "./styles/main.css";
+import "./styles/map.css";
 import {
   api,
   type Criterion,
@@ -24,6 +25,7 @@ import {
   routeFromFrames,
   type LabFrame,
 } from "./lab";
+import { setUIHTML } from "./ui";
 
 const app = document.getElementById("app")!;
 
@@ -260,7 +262,7 @@ function openStationSearch(opts: SearchTarget): void {
   const overlay = document.createElement("div");
   overlay.className = "search-overlay";
   overlay.id = "search-overlay";
-  overlay.innerHTML = `
+  setUIHTML(overlay, `
     <div class="search-box" role="dialog" aria-modal="true" aria-label="Buscar estación">
       <div class="search-head">
         <p class="eyebrow">${target === "from" ? "Origen" : "Destino"} · búsqueda incremental</p>
@@ -273,7 +275,7 @@ function openStationSearch(opts: SearchTarget): void {
       ${opts.extra ? `<p class="search-note">${esc(opts.extra)}</p>` : ""}
       <ul id="search-results" class="search-results" role="listbox" aria-label="Resultados"></ul>
       <p class="sr-only" id="search-count" aria-live="polite"></p>
-    </div>`;
+    </div>`);
   app.appendChild(overlay);
 
   const input = overlay.querySelector<HTMLInputElement>("#search-input")!;
@@ -287,19 +289,19 @@ function openStationSearch(opts: SearchTarget): void {
     // pantalla anuncia la opción activa de la lista.
     if (options.length === 0) {
       input.removeAttribute("aria-activedescendant");
-      list.innerHTML = `<li class="search-empty" role="status">Sin coincidencias.</li>`;
+      setUIHTML(list, `<li class="search-empty" role="status">Sin coincidencias.</li>`);
       return;
     }
     const cursorId = `search-opt-${options[cursor].id}`;
     input.setAttribute("aria-activedescendant", cursorId);
-    list.innerHTML = options
+    setUIHTML(list, options
       .map(
         (s, i) => `<li role="option" id="search-opt-${s.id}" aria-selected="${i === cursor}" class="search-option${i === cursor ? " active" : ""}" data-id="${s.id}">
           <span class="so-name">${esc(s.name)}</span>
           <span class="so-meta">${esc(s.municipio)} · ${s.lines.map(esc).join(" ")}</span>
         </li>`,
       )
-      .join("");
+      .join(""));
   };
 
   const refill = () => {
@@ -419,7 +421,7 @@ function closeSearch(): void {
 
 function renderShell(state: State): void {
   const theme = currentTheme();
-  app.innerHTML = `
+  setUIHTML(app, `
     <a class="skip-link" href="#side">Saltar al panel</a>
     <header class="site-header">
       <div class="header-inner">
@@ -487,7 +489,7 @@ function renderShell(state: State): void {
         <p class="signature">Diseño y desarrollo — <span class="sig-name">samirjosegil</span></p>
       </div>
     </footer>
-    <p class="sr-only" id="live-region" role="status" aria-live="polite"></p>`;
+    <p class="sr-only" id="live-region" role="status" aria-live="polite"></p>`);
 
   const mapWrap = app.querySelector(".map-wrap")!;
   mapWrap.insertBefore(state.map.el, mapWrap.querySelector(".map-tools"));
@@ -536,7 +538,10 @@ function wireShell(state: State): void {
     const next: Theme = toggleTheme();
     const button = event.currentTarget as HTMLButtonElement;
     button.setAttribute("aria-pressed", String(next === "dark"));
-    button.querySelector(".theme-icon")!.innerHTML = icon(next === "dark" ? "sun" : "moon");
+    setUIHTML(
+      button.querySelector(".theme-icon")!,
+      icon(next === "dark" ? "sun" : "moon"),
+    );
     state.map.setTheme(next);
   });
   app.querySelector("#search-global")?.addEventListener("click", () => {
@@ -660,20 +665,19 @@ async function setMode(state: State, mode: Mode): Promise<void> {
 async function setView(state: State, kind: MapViewKind): Promise<void> {
   if (state.kind === kind) return;
   state.kind = kind;
-  const mapWrap = app.querySelector(".map-wrap")!;
   state.map.clearExplore();
   state.map.clearClosed();
   const fallback = new MapView(state.graph, kind);
+  state.map.destroy();
+  state.map.el.replaceWith(fallback.el);
+  state.map = fallback;
   const next = await createMapSurface(
     state.graph,
     kind,
     currentTheme(),
     fallback,
   );
-  state.map.destroy();
-  state.map.el.remove();
-  state.map = next;
-  mapWrap.insertBefore(next.el, mapWrap.querySelector(".map-tools"));
+  if (next !== fallback) state.map = next;
   wireMapHandlers(state, next);
 
   syncSelection(state);
@@ -741,20 +745,20 @@ function renderSide(state: State): void {
   const side = app.querySelector<HTMLElement>("#side");
   if (!side) return;
   if (state.mode === "plan") {
-    side.innerHTML = planSideHTML(state);
+    setUIHTML(side, planSideHTML(state));
     wirePlanSide(state, side);
   } else if (state.mode === "lab") {
-    side.innerHTML = `
+    setUIHTML(side, `
       <div class="results">
         ${journeyCardHTML(state, "02 — Laboratorio")}
         <section class="panel lab-partner">
           <p class="eyebrow">03 — Traza</p>
           <div id="lab-mount" aria-label="Ejecución paso a paso"></div>
         </section>
-      </div>`;
+      </div>`);
     wireJourney(state, side, () => void runLab(state));
   } else {
-    side.innerHTML = incidentSideHTML(state);
+    setUIHTML(side, incidentSideHTML(state));
     wireIncidentSide(state, side);
   }
 }
@@ -898,12 +902,12 @@ function selectAlternative(state: State, index: number): void {
   const detail = results.querySelector<HTMLElement>(".result-panel");
   if (detail) {
     const replacement = document.createElement("div");
-    replacement.innerHTML = routeDetailHTML(
+    setUIHTML(replacement, routeDetailHTML(
       state,
       route,
       `Ruta alternativa ${String(index + 1).padStart(2, "0")}`,
       "Ruta · alternativa",
-    );
+    ));
     detail.replaceWith(replacement.firstElementChild!);
     wireResults(state, results);
   }
@@ -1080,18 +1084,18 @@ async function runPlan(state: State, mode: "calc" | "compare"): Promise<void> {
   state.lab = null;
   state.map.clearExplore();
   if (state.from === null || state.to === null) {
-    results.innerHTML = warn("Selecciona un origen y un destino para calcular la ruta.");
+    setUIHTML(results, warn("Selecciona un origen y un destino para calcular la ruta."));
     return;
   }
   if (state.from === state.to) {
-    results.innerHTML = warn("El origen y el destino son la misma estación.");
+    setUIHTML(results, warn("El origen y el destino son la misma estación."));
     return;
   }
 
   const runId = ++state.runId;
   try {
     if (mode === "calc") {
-      results.innerHTML = loadingBlock("Calculando la ruta…");
+      setUIHTML(results, loadingBlock("Calculando la ruta…"));
       const route = await api.route({
         from: state.from,
         to: state.to,
@@ -1103,7 +1107,7 @@ async function runPlan(state: State, mode: "calc" | "compare"): Promise<void> {
         state.activeRoute = null;
         state.exportParams = null;
         state.lastPlan = null;
-        results.innerHTML = warn("No existe una ruta disponible entre esas estaciones.");
+        setUIHTML(results, warn("No existe una ruta disponible entre esas estaciones."));
         announce(state, "No existe una ruta disponible entre esas estaciones.");
         return;
       }
@@ -1137,7 +1141,7 @@ async function runPlan(state: State, mode: "calc" | "compare"): Promise<void> {
         `Ruta calculada: ${route.totalMin.toFixed(1)} minutos, ${route.stops} paradas.`,
       );
     } else {
-      results.innerHTML = loadingBlock("Comparando criterios…");
+      setUIHTML(results, loadingBlock("Comparando criterios…"));
       const [fast, few] = await Promise.all([
         api.route({ from: state.from, to: state.to, criterion: "time" }),
         api.route({ from: state.from, to: state.to, criterion: "hops" }),
@@ -1153,12 +1157,12 @@ async function runPlan(state: State, mode: "calc" | "compare"): Promise<void> {
       const right = few.found
         ? routeDetailHTML(state, few, "BFS · menos paradas", "Criterio B", false)
         : warn("Sin ruta por paradas.");
-      results.innerHTML = `<div class="compare">${left}${right}</div>${exportActions(state)}`;
+      setUIHTML(results, `<div class="compare">${left}${right}</div>${exportActions(state)}`);
       wireResults(state, results);
     }
   } catch (error) {
     if (runId !== state.runId) return;
-    results.innerHTML = warn(`Ocurrió un error al contactar la API: ${String(error)}`);
+    setUIHTML(results, warn(`Ocurrió un error al contactar la API: ${String(error)}`));
   }
 }
 
@@ -1188,7 +1192,7 @@ function foldHTML(summary: string, content: string): string {
 function renderPlanResults(state: State): void {
   const results = app.querySelector<HTMLElement>("#results");
   if (!results || state.mode !== "plan" || !state.lastPlan) return;
-  results.innerHTML = planResultsHTML(state, state.lastPlan);
+  setUIHTML(results, planResultsHTML(state, state.lastPlan));
   wireResults(state, results);
   wireHistory(state);
 }
@@ -1223,11 +1227,11 @@ async function runLab(state: State): Promise<void> {
   const mount = app.querySelector<HTMLElement>("#lab-mount");
   if (!mount) return;
   if (state.from === null || state.to === null || state.from === state.to) {
-    mount.innerHTML = warn("Elige un origen y un destino distintos en la tarjeta de arriba.");
+    setUIHTML(mount, warn("Elige un origen y un destino distintos en la tarjeta de arriba."));
     return;
   }
   const labRunId = ++state.labRunId;
-  mount.innerHTML = loadingBlock("Generando la traza del algoritmo…");
+  setUIHTML(mount, loadingBlock("Generando la traza del algoritmo…"));
   try {
     const trace = await api.trace({
       from: state.from,
@@ -1263,7 +1267,7 @@ async function runLab(state: State): Promise<void> {
     announce(state, "Traza generada: pulsa reproducir para ver el algoritmo paso a paso.");
   } catch (error) {
     if (labRunId !== state.labRunId) return;
-    mount.innerHTML = warn(`Error al obtener la traza: ${String(error)}`);
+    setUIHTML(mount, warn(`Error al obtener la traza: ${String(error)}`));
   }
 }
 
@@ -1373,7 +1377,7 @@ async function runIncident(state: State): Promise<void> {
   const container = app.querySelector<HTMLElement>("#incident-results");
   if (!container) return;
   const runId = ++state.runId;
-  container.innerHTML = loadingBlock("Recalculando con los cierres aplicados…");
+  setUIHTML(container, loadingBlock("Recalculando con los cierres aplicados…"));
   const ids = closedIds(state);
   try {
     const [original, scenario] = await Promise.all([
@@ -1396,7 +1400,7 @@ async function runIncident(state: State): Promise<void> {
     };
     state.map.setClosedEdges(ids);
     state.map.setActiveRoute(state.activeRoute);
-    container.innerHTML = incidentCompareHTML(state);
+    setUIHTML(container, incidentCompareHTML(state));
     container.querySelector<HTMLButtonElement>("[data-export]")?.addEventListener(
       "click",
       () => void doExport(state, container),
@@ -1421,7 +1425,7 @@ async function runIncident(state: State): Promise<void> {
     );
   } catch (error) {
     if (runId !== state.runId) return;
-    container.innerHTML = warn(`Error al comparar: ${String(error)}`);
+    setUIHTML(container, warn(`Error al comparar: ${String(error)}`));
   }
 }
 
@@ -1538,7 +1542,7 @@ function historyHTML(state: State): string {
     .map(({ e }) => {
       const key = histKey(e);
       const isPinned = pinned.has(key);
-      return `<li class="hist-item${isPinned ? " pinned" : ""}">
+      return `<li class="hist-item${isPinned ? " pinned" : ""}" data-pinned="${isPinned}">
         <button class="hist-go" type="button" data-hist-go='${esc(JSON.stringify(e))}' data-hist-go-key="${esc(key)}">
           <span class="hist-route">${esc(stationLabel(state, e.from))} → ${esc(stationLabel(state, e.to))}</span>
           <span class="hist-meta">${e.criterion === "time" ? "Tiempo" : "Paradas"}</span>
@@ -1618,7 +1622,7 @@ function refreshHistoryPanel(state: State): void {
 
 async function init(): Promise<void> {
   applyTheme(resolveInitialTheme());
-  app.innerHTML = `<div class="boot"><p class="boot-mark">MetroFlow</p><p class="boot-note">Cargando la red de transporte…</p></div>`;
+  setUIHTML(app, `<div class="boot"><p class="boot-mark">MetroFlow</p><p class="boot-note">Cargando la red de transporte…</p></div>`);
   try {
     const graph = await api.graph();
     const state: State = {
@@ -1667,11 +1671,7 @@ async function init(): Promise<void> {
         fallback,
       );
       if (upgraded !== fallback) {
-        const mapWrap = app.querySelector(".map-wrap")!;
-        fallback.destroy();
-        fallback.el.remove();
         state.map = upgraded;
-        mapWrap.insertBefore(upgraded.el, mapWrap.querySelector(".map-tools"));
         wireMapHandlers(state, upgraded);
         syncSelection(state);
         upgraded.setActiveRoute(state.activeRoute);
@@ -1683,13 +1683,12 @@ async function init(): Promise<void> {
     else if (state.from !== null && state.to !== null && state.from !== state.to) {
       void runPlan(state, "calc");
     }
-    requestAnimationFrame(() => app.classList.add("is-entered"));
   } catch (error) {
-    app.innerHTML = `<div class="boot error">
+    setUIHTML(app, `<div class="boot error">
       <p class="boot-mark">MetroFlow</p>
       <p class="boot-note">No se pudo cargar la red: ${esc(String(error))}</p>
       <p class="boot-note">Comprueba que la API esté en ejecución (<code>./build.ps1 -Serve</code>).</p>
-    </div>`;
+    </div>`);
   }
 }
 

@@ -1,0 +1,254 @@
+svg.metro-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  background: transparent;
+  touch-action: pan-x pan-y pinch-zoom;
+  cursor: grab;
+}
+
+svg.metro-map.kind-geo {
+  max-height: 78vh;
+}
+
+svg.metro-map.panning {
+  cursor: grabbing;
+}
+
+svg.metro-map line,
+svg.metro-map circle {
+  vector-effect: non-scaling-stroke;
+}
+
+.edges line {
+  opacity: 0.92;
+}
+
+.station {
+  cursor: pointer;
+  outline: none;
+}
+
+.station .marker {
+  fill: var(--color-surface);
+  transition: r 120ms ease, stroke 120ms ease, stroke-width 120ms ease;
+}
+
+.station .dot {
+  display: none;
+  fill: var(--color-ink);
+  pointer-events: none;
+}
+
+.station.interchange .dot,
+.station.destination .dot,
+.station.settled .dot {
+  display: block;
+}
+
+.station:hover:not(.origin):not(.destination) .marker,
+.station:focus-visible .marker,
+.station.explored .marker {
+  stroke: var(--color-accent);
+  stroke-width: 3.4;
+}
+
+.station.origin .marker {
+  fill: var(--color-accent);
+  stroke: var(--color-canvas);
+  stroke-width: 3;
+}
+
+.station.origin .dot {
+  display: none;
+}
+
+.station.destination .marker {
+  fill: var(--color-surface);
+  stroke: var(--color-accent);
+  stroke-width: 2.6;
+}
+
+.station.settled .marker {
+  fill: var(--color-ink);
+  stroke: var(--color-surface);
+  stroke-width: 3.2;
+}
+
+.station.frontier .marker {
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-dasharray: 2.4 1.8;
+}
+
+.station.active .marker {
+  fill: var(--color-surface);
+  stroke: var(--color-accent);
+  stroke-width: 4.2;
+}
+
+.station-label {
+  fill: var(--color-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: var(--color-canvas);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.station-label.minor {
+  opacity: 0;
+}
+
+.station:hover .station-label.minor,
+.station:focus-visible .station-label.minor {
+  opacity: 1;
+}
+
+.station-label.side,
+.station-label.rotated {
+  text-anchor: start;
+  paint-order: stroke;
+  stroke: var(--color-canvas);
+  stroke-width: 3px;
+}
+
+.route-casing,
+.route-leg,
+.route-dot {
+  fill: none;
+}
+
+.route-casing {
+  stroke: var(--color-canvas);
+  stroke-width: 12;
+  stroke-linecap: round;
+}
+
+.route-leg {
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.route-dot {
+  fill: var(--color-accent-ink);
+  stroke: var(--color-canvas);
+  stroke-width: 1.5;
+}
+
+.explore-edge {
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 3 5;
+  opacity: 0.95;
+}
+
+.edge-hit {
+  pointer-events: stroke;
+  cursor: pointer;
+}
+
+.dist-label {
+  fill: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  paint-order: stroke;
+  stroke: var(--color-canvas);
+  stroke-width: 3px;
+  pointer-events: none;
+}
+
+.closed-mark line {
+  stroke: var(--color-danger);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+
+.kind-schem .station .marker {
+  stroke-width: 2.6;
+}
+
+.kind-schem .station.interchange .marker {
+  stroke-width: 3.2;
+}
+
+.schematic-contour {
+  fill: none;
+  stroke: var(--color-line-strong);
+  stroke-width: 1;
+  stroke-dasharray: 1 8;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.schematic-river {
+  fill: none;
+  stroke: #5b807d;
+  stroke-width: 22;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.schematic-river-center {
+  fill: none;
+  stroke: #739c96;
+  stroke-width: 1.5;
+  stroke-dasharray: 3 6;
+  opacity: 0.48;
+  pointer-events: none;
+}
+
+.schematic-place {
+  fill: var(--color-muted);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0.78;
+  pointer-events: none;
+}
+
+.schematic-river-label {
+  fill: #739c96;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  opacity: 0.88;
+  pointer-events: none;
+}
+
+.schematic-scale-note {
+  fill: var(--color-dim);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  opacity: 0.88;
+  pointer-events: none;
+}
+
+.maplibre-host .maplibregl-canvas {
+  outline: none;
+}
+
+.maplibre-host .maplibregl-ctrl-attrib {
+  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  color: var(--color-muted);
+  font-size: 10px;
+}
+
+.maplibre-host .maplibregl-ctrl-attrib a {
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .station .marker,
+  .station-label {
+    transition: none;
+  }
+}

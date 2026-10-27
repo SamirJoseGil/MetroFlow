@@ -7,8 +7,8 @@ El proyecto tiene tres capas independientes:
    BFS, rutas alternativas y trazas paso a paso.
 2. **API HTTP en C++** (Crow) que expone el motor como JSON y sirve el frontend
    compilado.
-3. **Frontend en TypeScript + Vite + SVG** (sin framework) que dibuja la red y
-   consume la API.
+3. **Frontend en TypeScript + Vite + Tailwind CSS + SVG** (sin framework de
+   componentes) que dibuja la red y consume la API.
 
 > Autor de la interfaz y la identidad visual: **samirjosegil**.
 
@@ -32,7 +32,7 @@ Desde la raíz del repositorio:
 
 ```powershell
 ./build.ps1            # compila el CLI y las pruebas
-./build.ps1 -Run       # compila y ejecuta las pruebas (18 casos, 64 aserciones)
+./build.ps1 -Run       # compila y ejecuta las pruebas (24 casos, 103 aserciones)
 ./build.ps1 -Api       # compila además el servidor API
 ./build.ps1 -Serve     # compila el API y lo deja corriendo en http://localhost:18080
 ./build.ps1 -All       # CLI + pruebas + API
@@ -153,7 +153,8 @@ frontend/
     theme.ts      Tema claro/oscuro persistente
     icons.ts      Iconos SVG en línea
     projection.ts Proyección equirectangular
-    styles/       Hojas de estilo (identidad editorial monocromática)
+    styles/       Tailwind y estilos específicos del mapa SVG
+    ui.ts         Utilidades Tailwind para las plantillas HTML
   vite.config.ts  Proxy /api -> :18080, salida en dist/
 data/             Datos de la red (JSON)
 docs/styles/      Guía de estilo de referencia
@@ -166,13 +167,20 @@ build.ps1         Compilación con g++
 
 ## Interfaz
 
-La interfaz sigue una **identidad editorial monocromática** (tipografía serif,
-etiquetas en versalitas, bordes rectos, alto contraste) manteniendo los colores
-semánticos de cada línea de transporte. Incluye:
+La interfaz usa un **tema oscuro carbón** con tipografía serif editorial y un
+acento latón discreto; Tailwind CSS centraliza las utilidades y los tokens del
+tema. Los colores de las líneas de transporte se conservan como codificación
+semántica. El tema oscuro es el predeterminado y se puede alternar al claro.
+Incluye:
 
-- Tema **claro/oscuro** persistente (respeta la preferencia del sistema).
-- Mapa SVG con **zoom y desplazamiento**, resaltado de la ruta activa y un
-  **laboratorio** que reproduce el algoritmo paso a paso sobre el grafo.
+- Tema **claro/oscuro** persistente (recuerda la elección del usuario).
+- Vista geográfica sobre teselas **OpenStreetMap**, con estaciones y rutas en
+  sus coordenadas reales; requiere conexión a internet y muestra su atribución.
+- Vista esquemática con el corredor del río y referencias municipales para
+  orientar el recorrido; el diagrama se indica explícitamente como no a escala.
+- Mapa con **zoom y desplazamiento**, resaltado de la ruta activa y un
+  **laboratorio** que reproduce el algoritmo paso a paso sobre el grafo. Si no
+  se puede iniciar el mapa cartográfico, se conserva la vista SVG de respaldo.
 - Selección de **rutas alternativas** y **exportación** de la ruta junto al grafo.
 - Diseño **accesible** (navegación por teclado, roles/etiquetas ARIA, respeto a
   `prefers-reduced-motion`) y **responsivo**.
@@ -195,7 +203,8 @@ Cubren la construcción del grafo, rutas (Dijkstra/BFS), respeto de la bandera
 - Tiempos y velocidades **estimados**, no datos de operación en vivo.
 - Coordenadas intermedias de la Línea O **interpoladas**.
 - Las rutas alternativas son una **aproximación** (no óptimas garantizadas).
-- El frontend no se ha verificado visualmente en un navegador desde este entorno.
+- El frontend se verificó visualmente en Chromium a 390 × 844, 768 × 1024,
+  1280 × 720 y 1556 × 623; no se ha validado en otros navegadores.
 
 ---
 

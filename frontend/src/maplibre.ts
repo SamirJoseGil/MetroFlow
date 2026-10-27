@@ -42,7 +42,7 @@ function rasterPaint(theme: MapTheme): Record<string, number> {
   return theme === "dark"
     ? {
         "raster-saturation": -0.8,
-        "raster-contrast": 1.05,
+        "raster-contrast": 0.8,
         "raster-brightness-min": 0.05,
         "raster-brightness-max": 0.7,
         "raster-opacity": 0.92,
@@ -68,12 +68,12 @@ interface Palette {
 
 const PALETTES: Record<MapTheme, Palette> = {
   light: {
-    surface: "#ffffff", surface2: "#f4f4f5", ink: "#0a0a0a", ink2: "#52525b",
-    line: "#d4d4d8", casing: "#ffffff", danger: "#b91c1c",
+    surface: "#fbfaf6", surface2: "#e9e8e0", ink: "#20241f", ink2: "#5d675e",
+    line: "#d5d4cb", casing: "#f2f1eb", danger: "#a53632",
   },
   dark: {
-    surface: "#0d0d0e", surface2: "#151517", ink: "#fafafa", ink2: "#a1a1aa",
-    line: "#2f2f33", casing: "#0a0a0a", danger: "#f87171",
+    surface: "#171c18", surface2: "#202721", ink: "#e8eee8", ink2: "#a4aea5",
+    line: "#343e36", casing: "#101411", danger: "#f08d86",
   },
 };
 
@@ -115,13 +115,27 @@ export class MapLibreView implements MapSurface {
     this.pal = PALETTES[theme];
     this.stations = graph.stations;
     this.el = document.createElement("div");
-    this.el.className = "maplibre-host";
+    this.el.className =
+      "maplibre-host h-[clamp(420px,70vh,780px)] min-h-[420px] w-full overflow-hidden rounded-lg";
   }
 
   /** Crea el mapa; rechaza si el estilo/teselas no cargan (fallback a SVG). */
-  static create(graph: Graph, theme: MapTheme): Promise<MapLibreView> {
+  static async create(
+    graph: Graph,
+    theme: MapTheme,
+    placeholder: Element,
+  ): Promise<MapLibreView> {
     const view = new MapLibreView(graph, theme);
-    return view.init();
+    placeholder.before(view.el);
+    try {
+      await view.init();
+      placeholder.remove();
+      return view;
+    } catch (error) {
+      view.destroy();
+      view.el.remove();
+      throw error;
+    }
   }
 
   private init(): Promise<MapLibreView> {
@@ -131,14 +145,26 @@ export class MapLibreView implements MapSurface {
     const [west, south, east, north] = this.bounds();
     return new Promise((resolve, reject) => {
       let settled = false;
+      let map: MapLibreMap | undefined;
+      let lastError = "";
       const fail = (reason: string) => {
         if (settled) return;
         settled = true;
+        window.clearTimeout(timer);
+        map?.remove();
         reject(new Error(reason));
       };
-      const timer = window.setTimeout(() => fail("tiempo de carga agotado"), 12000);
+      const timer = window.setTimeout(
+        () =>
+          fail(
+            lastError
+              ? `tiempo de carga agotado: ${lastError}`
+              : "tiempo de carga agotado",
+          ),
+        12000,
+      );
 
-      const map = new MapLibreMap({
+      const created = new MapLibreMap({
         container: this.el,
         style: this.buildStyle(),
         bounds: [west, south, east, north],
@@ -149,21 +175,33 @@ export class MapLibreView implements MapSurface {
           [east + 1.5, north + 1.5],
         ],
       });
-      this.map = map;
+      map = created;
+      this.map = created;
 
-      map.on("error", (e: unknown) => {
-        const msg = String((e as { error?: Error })?.error?.message ?? "");
+      created.on("error", (e: unknown) => {
+        const event = e as { error?: Error; sourceId?: string };
+        const msg = String(event.error?.message ?? "");
+        lastError = msg;
         // Los errores de tesela aislados no invalidan el mapa; sólo un fallo
         // de estilo/WebGL merece el fallback.
-        if (/style|webgl|context/i.test(msg)) fail(`mapa: ${msg}`);
+        if (
+          !event.sourceId ||
+          /style|webgl|context|layers\[\d+\]/i.test(msg)
+        ) {
+          fail(`mapa: ${msg}`);
+        }
       });
-      map.on("load", () => {
+      created.on("style.load", () => {
         if (settled) return;
-        settled = true;
-        window.clearTimeout(timer);
-        this.addLayers();
-        this.bindEvents();
-        resolve(this);
+        try {
+          this.addLayers();
+          this.bindEvents();
+          settled = true;
+          window.clearTimeout(timer);
+          resolve(this);
+        } catch (error) {
+          fail(`no se pudieron crear las capas del mapa: ${String(error)}`);
+        }
       });
     });
   }
@@ -331,11 +369,7 @@ export class MapLibreView implements MapSurface {
     // Etiquetas de estaciones secundarias, sólo al pasar el cursor.
     add({
       id: "labels-hover", type: "symbol", source: "stations",
-      filter: [
-        "all",
-        ["!", ["get", "labeled"]],
-        ["boolean", ["feature-state", "hover"], false],
-      ],
+      filter: ["!", ["get", "labeled"]],
       layout: {
         "text-field": ["get", "name"],
         "text-size": 11,
@@ -343,7 +377,17 @@ export class MapLibreView implements MapSurface {
         "text-anchor": "top",
         "text-padding": 2,
       },
-      paint: { "text-color": pal.ink2, "text-halo-color": pal.casing, "text-halo-width": 2 },
+      paint: {
+        "text-color": pal.ink2,
+        "text-halo-color": pal.casing,
+        "text-halo-width": 2,
+        "text-opacity": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          1,
+          0,
+        ],
+      },
     });
 
     // dist(v) selectivo del laboratorio.
@@ -770,9 +814,10 @@ export async function createMapSurface(
 ): Promise<MapSurface> {
   if (kind === "geo") {
     try {
-      return await MapLibreView.create(graph, theme);
-    } catch {
-      return svgFallback; // sin conexión / WebGL: se mantiene el SVG geográfico
+      return await MapLibreView.create(graph, theme, svgFallback.el);
+    } catch (error) {
+      console.warn("No se pudo cargar el mapa geográfico; se usa la vista SVG.", error);
+      return svgFallback;
     }
   }
   return svgFallback;
