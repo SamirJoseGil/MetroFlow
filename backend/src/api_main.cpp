@@ -9,6 +9,7 @@
 #include "RoutePlanner.hpp"
 #include "Serialize.hpp"
 #include "crow.h"
+#include "crow/middlewares/cors.h"
 
 namespace fs = std::filesystem;
 
@@ -48,7 +49,14 @@ int main() {
         (fs::path(dataDir) / "stations.json").string(),
         (fs::path(dataDir) / "connections.json").string());
 
-    crow::SimpleApp app;
+    crow::App<crow::CORSHandler> app;
+
+    auto& cors = app.get_middleware<crow::CORSHandler>();
+    cors.global()
+        .origin("*")
+        .methods("GET"_method, "POST"_method, "OPTIONS"_method)
+        .headers("Content-Type", "Authorization", "X-Requested-With")
+        .allow_credentials();
 
     CROW_ROUTE(app, "/api/health")([]() {
         crow::json::wvalue x;

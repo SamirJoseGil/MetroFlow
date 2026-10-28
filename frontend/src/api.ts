@@ -88,8 +88,15 @@ export interface Trace {
 
 export type Criterion = "time" | "hops";
 
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+
+function apiUrl(path: string): string {
+  if (API_BASE) return `${API_BASE}${path.startsWith("/") ? path : `/${path}`}`;
+  return path;
+}
+
 async function fetchJSON<T>(url: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(url, init);
+  const res = await fetch(apiUrl(url), init);
   if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
   return res.json() as Promise<T>;
 }
