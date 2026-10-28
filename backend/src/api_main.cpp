@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstdlib>
 #include <cctype>
 #include <filesystem>
 #include <fstream>
@@ -9,9 +10,21 @@
 #include "RoutePlanner.hpp"
 #include "Serialize.hpp"
 #include "crow.h"
-#include "crow/middlewares/cors.h"
 
 namespace fs = std::filesystem;
+
+static int readPortFromEnv() {
+    const char* envPort = std::getenv("PORT");
+    if (envPort && *envPort) {
+        try {
+            int p = std::stoi(envPort);
+            if (p > 0 && p < 65536) return p;
+        } catch (const std::exception&) {
+            // Si PORT no es numérico, se usa el valor por defecto.
+        }
+    }
+    return 18080;
+}
 
 static std::string findDataDir() {
     fs::path cwd = fs::current_path();
@@ -376,6 +389,6 @@ int main() {
             });
     }
 
-    app.port(18080).multithreaded().run();
+    app.port(readPortFromEnv()).multithreaded().run();
     return 0;
 }
