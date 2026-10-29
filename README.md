@@ -14,6 +14,30 @@ El proyecto tiene tres capas independientes:
 
 ---
 
+## Despliegue (producción)
+
+El backend (API C++) está desplegado en [Render](https://render.com/) usando su plan gratuito y la imagen Docker definida en `Dockerfile`. El frontend se sirve desde el mismo contenedor (modo monolítico), por lo que no es necesario desplegar el frontend por separado.
+
+### URL del servicio
+```
+https://metroflow-api-4hpj.onrender.com
+```
+
+### Endpoints principales
+| Método | Ruta | Descripción |
+|---|---|---|
+| `GET` | `/api/health` | Estado del servicio (`{"status":"ok"}`) |
+| `GET` | `/api/stations` | Lista de estaciones y líneas |
+| `GET` | `/api/graph` | Grafo completo de la red |
+| `POST` | `/api/route` | Calcula una ruta (Dijkstra / BFS) |
+| `POST` | `/api/trace` | Traza paso a paso del algoritmo |
+| `GET` | `/` | Interfaz web (frontend servido por la API) |
+
+> **Importante:** El plan gratuito de Render **duerme el servicio tras un período de inactividad**. La primera petición después de dormir puede tardar **30–60 segundos** (cold start) mientras Render vuelve a iniciar el contenedor. Las peticiones siguientes responden con normalidad.
+
+---
+
+
 ## Requisitos
 
 | Herramienta | Versión usada | Notas |
